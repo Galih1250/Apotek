@@ -216,8 +216,6 @@ Save these credentials somewhere safe:
 - Username: root
 - Password: (empty)
 
-**Midtrans:**
-
 
 ---
 
