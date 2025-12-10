@@ -74,7 +74,19 @@ class MidtransService
                 'production_mode' => Config::$isProduction,
             ]);
             
-            $token = Snap::getSnapToken($params);
+            $response = @Snap::createTransaction($params);
+            
+            // Check if response has token property
+            if (!isset($response->token)) {
+                Log::error('Midtrans API response missing token property', [
+                    'response_type' => gettype($response),
+                    'response_keys' => is_object($response) ? array_keys((array) $response) : 'N/A',
+                    'response_json' => json_encode($response),
+                ]);
+                throw new Exception('Midtrans API response is missing token property. API may have returned an error response.');
+            }
+            
+            $token = $response->token;
             
             Log::debug('Midtrans Snap token created successfully', [
                 'token_length' => strlen($token),
@@ -82,27 +94,48 @@ class MidtransService
             
             return $token;
         } catch (\Exception $e) {
-            $errorMsg = $e->getMessage();
-            
-            // If we get API error and not in demo mode, try falling back to demo
-            if (strpos($errorMsg, 'Undefined array key') !== false && !config('midtrans.demo_mode')) {
-                Log::warning('Midtrans API failed, falling back to demo mode', [
-                    'error' => $errorMsg,
+            $rawError = $e->getMessage();
+
+            // Log full exception for debugging "Undefined array key" errors
+            if (str_contains($rawError, 'Undefined array key')) {
+                Log::error('Midtrans Undefined array key error - debugging info', [
+                    'raw_error' => $rawError,
+                    'exception_file' => $e->getFile(),
+                    'exception_line' => $e->getLine(),
+                    'exception_trace' => $e->getTraceAsString(),
+                    'config_server_key' => config('midtrans.server_key') ? substr(config('midtrans.server_key'), 0, 10) . '...' : 'NOT SET',
+                    'config_is_production' => config('midtrans.is_production'),
+                    'config_is_sanitized' => config('midtrans.is_sanitized'),
                 ]);
-                
+            }
+
+            // If we get API error and not in demo mode, try falling back to demo
+            if (str_contains($rawError, 'Undefined array key') && !config('midtrans.demo_mode')) {
+                Log::warning('Midtrans API failed, falling back to demo mode', [
+                    'raw_error' => $rawError,
+                ]);
+
                 // Return demo token instead
                 $mockToken = 'FALLBACK-' . substr(hash('sha256', json_encode($params)), 0, 40);
                 Log::info('Using fallback demo token due to API error');
                 return $mockToken;
             }
-            
-            // Try to extract more info from the error
-            if (strpos($errorMsg, 'Undefined array key') !== false) {
-                $errorMsg = 'Midtrans API Error - Merchant ID or credentials may be incorrect. ' . $errorMsg;
+
+            // Sanitize common vendor error messages for logs/exceptions
+            if (str_contains($rawError, 'The ServerKey/ClientKey is null') || str_contains($rawError, 'The ServerKey/ClientKey is invalid') || str_contains($rawError, 'contains white-space')) {
+                $sanitized = 'Midtrans server key is missing or invalid. Please set MIDTRANS_SERVER_KEY in your .env file.';
+            } else {
+                // Remove URLs and email addresses, truncate to reasonable length
+                $sanitized = preg_replace('/https?:\/\/[^\s]+/i', '[link]', $rawError);
+                $sanitized = preg_replace('/[\w.+-]+@[\w.-]+/','[email]',$sanitized);
+                if (strlen($sanitized) > 400) {
+                    $sanitized = substr($sanitized, 0, 400) . '...';
+                }
             }
-            
+
             Log::error('Midtrans Snap token creation failed', [
-                'error' => $errorMsg,
+                'error' => $sanitized,
+                'raw_error' => $rawError,
                 'code' => $e->getCode(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -110,8 +143,8 @@ class MidtransService
                 'client_key_set' => !empty(Config::$clientKey),
                 'demo_mode' => config('midtrans.demo_mode'),
             ]);
-            
-            throw new Exception('Failed to create Snap token: ' . $errorMsg);
+
+            throw new Exception('Failed to create Snap token: ' . $sanitized);
         }
     }
 
@@ -208,7 +241,13 @@ class MidtransService
                 'expiry_duration' => 15,
                 'unit' => 'minute',
             ],
-            'metadata' => $customMetadata,
+            'metadata' => [
+                'key1' => 'value1',
+                'key2' => 'value2'
+            ],
+            'success_redirect_url' => route('payment.result'),
+            'pending_redirect_url' => route('payment.result'),
+            'error_redirect_url' => route('payment.result'),
         ];
     }
 }
