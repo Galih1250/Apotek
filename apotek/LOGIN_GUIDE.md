@@ -217,8 +217,6 @@ Save these credentials somewhere safe:
 - Password: (empty)
 
 **Midtrans:**
-- Server Key: Mid-server-k3tNAlMe_7lX6txfVgnYZR58
-- Client Key: Mid-client-McakzX3AphgORqsf
 
 ---
 
