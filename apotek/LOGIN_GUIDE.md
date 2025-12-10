@@ -216,9 +216,6 @@ Save these credentials somewhere safe:
 - Username: root
 - Password: (empty)
 
-
----
-
 ## ❓ Troubleshooting
 
 ### "Access Denied" Error
