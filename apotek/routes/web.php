@@ -2,22 +2,52 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+
+// ===========================================
+// STORE FRONT
+// ===========================================
+Route::prefix('/')->name('store.')->group(function () {
+
+    // Homepage
+    Route::get('/', [StoreController::class, 'index'])->name('index');
+
+    // Product details (STORE FRONT)
+    Route::get('/product/{slug}', [StoreController::class, 'show'])->name('product.show');
+
+    // Cart page
+    Route::get('/cart', function () {
+        return view('store.cart');
+    })->name('cart');
+Route::get('/pay', [StoreController::class, 'pay'])->name('store.pay');
+Route::get('/pay', [PaymentController::class, 'payPage'])->name('pay');
+Route::get('/pay/create', [PaymentController::class, 'create'])->name('pay.create');
+Route::post('/pay', [PaymentController::class, 'pay'])->name('store.pay');
 });
 
+
+// ===========================================
+// USER DASHBOARD
+// ===========================================
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// ===========================================
+// PROFILE + PAYMENTS (AUTH REQUIRED)
+// ===========================================
 Route::middleware('auth')->group(function () {
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Payment routes
+    // Payment
     Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
     Route::post('/payment/create', [PaymentController::class, 'createPayment'])->name('payment.create');
     Route::get('/payment/result', [PaymentController::class, 'paymentResult'])->name('payment.result');
@@ -25,7 +55,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/payment/check-status', [PaymentController::class, 'checkStatus'])->name('payment.check-status');
 });
 
-// Midtrans webhook (no auth required)
-Route::post('/midtrans-webhook', [PaymentController::class, 'handleNotification'])->name('midtrans.webhook');
+
+// ===========================================
+// MIDTRANS WEBHOOK
+// ===========================================
+Route::post('/midtrans-webhook', [PaymentController::class, 'handleNotification'])
+    ->name('midtrans.webhook');
+
 
 require __DIR__.'/auth.php';
+
+
+// routes/web.php
+Route::prefix('admin')->middleware('auth')->group(function() {
+    Route::get('products', [ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+});
