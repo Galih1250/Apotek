@@ -117,6 +117,19 @@
           Sign Up
         </button>
       </form>
+      
+      <a href="{{ route('auth.google') }}"
+        class="flex items-center justify-center gap-3 mx-auto border border-gray-300 rounded-md py-2 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+        <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google"
+          class="w-5 h-5"
+        />
+        Sign in with Google
+      </a>
+
+
+
     </main>
 
 

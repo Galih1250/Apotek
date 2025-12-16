@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,7 +64,6 @@ Route::post('/midtrans-webhook', [PaymentController::class, 'handleNotification'
     ->name('midtrans.webhook');
 
 
-require __DIR__.'/auth.php';
 
 
 // routes/web.php
@@ -75,3 +75,23 @@ Route::prefix('admin')->middleware('auth')->group(function() {
     Route::put('products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 });
+
+use Illuminate\Support\Facades\Auth;
+
+Route::get('/admin', function () {
+    $user = Auth::user();
+
+    // Redirect non-admin users to store
+    if (!$user || !$user->is_admin) {
+        return redirect()->route('store.index');
+    }
+
+    $products = \App\Models\Product::all(); // or paginate if needed
+
+    return view('admin.admin', compact('products'));
+})->name('admin.dashboard')->middleware('auth');
+
+Route::get('/auth/google', [SocialiteController::class, 'redirect']);
+Route::get('/auth/google/callback', [SocialiteController::class, 'callback']);
+
+require __DIR__.'/auth.php';
