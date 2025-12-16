@@ -38,6 +38,17 @@
 <!-- LOGIN FORM -->
 <form id="loginForm" action="{{ route('login') }}" method="POST" class="mt-6 space-y-4">
   @csrf
+
+   @if ($errors->any())
+  <div class="text-red-600 mb-4">
+    <ul class="list-disc list-inside">
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
   <div class="relative">
     <input name="email" type="email" placeholder="Email" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
   </div>
@@ -107,4 +118,10 @@
     signupForm.classList.remove('hidden');
     loginForm.classList.add('hidden');
   });
+</script>
+
+<script>
+loginForm.addEventListener('submit', function(e) {
+  console.log("Login form submitted");
+});
 </script>
