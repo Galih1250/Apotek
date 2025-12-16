@@ -24,143 +24,87 @@
         Wijaya Medika Klinik
       </div>
 
-      <div class="mt-6 flex items-center justify-center gap-2">
-        <button id="loginTab" class="px-4 py-2 rounded-full bg-red-600 text-white font-medium transition active:scale-95">
-          Login
-        </button>
+      <!-- LOGIN / SIGNUP PAGE (no CSS changed) -->
 
-        <button id="signupTab" class="px-4 py-2 rounded-full bg-slate-200 text-slate-800 font-medium transition active:scale-95">
-          Sign Up
-        </button>
-      </div>
+<div class="mt-6 flex items-center justify-center gap-2">
+  <button id="loginTab" type="button" class="px-4 py-2 rounded-full bg-red-600 text-white font-medium transition active:scale-95">
+    Login
+  </button>
+  <button id="signupTab" type="button" class="px-4 py-2 rounded-full bg-slate-200 text-slate-800 font-medium transition active:scale-95">
+    Sign Up
+  </button>
+</div>
 
-      <!-- LOGIN FORM -->
-      <form id="loginForm" action="{{ route('login') }}" method="POST" class="mt-6 space-y-4">
-        @csrf
-        <div class="relative">
-          <input name="email" type="email" placeholder="Email"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M1.5 8.67v8.58a2.25 2.25 0 002.25 2.25h16.5a2.25 2.25 0 002.25-2.25V8.67l-9.01 5.34a2.25 2.25 0 01-2.28 0L1.5 8.67z"/>
-              <path d="M21.75 6.75v-.75A2.25 2.25 0 0019.5 3.75h-15A2.25 2.25 0 002.25 6v.75l9.01 5.34a2.25 2.25 0 002.28 0l8.21-4.59z"/>
-            </svg>
-          </span>
-        </div>
+<!-- LOGIN FORM -->
+<form id="loginForm" action="{{ route('login') }}" method="POST" class="mt-6 space-y-4">
+  @csrf
+  <div class="relative">
+    <input name="email" type="email" placeholder="Email" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <div class="relative">
+    <input name="password" type="password" placeholder="Password" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <button type="submit" class="w-full rounded-full bg-rose-400 text-white py-3 font-medium transition active:scale-95 hover:shadow-md">
+    Login
+  </button>
+</form>
 
-        <div class="relative">
-          <input name="password" type="password" placeholder="Password"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1.5a5.25 5.25 0 00-5.25 5.25V9H5.25A2.25 2.25 0 003 11.25v8.25A2.25 2.25 0 005.25 21.75h13.5A2.25 2.25 0 0021 19.5v-8.25A2.25 2.25 0 0018.75 9H17.25V6.75A5.25 5.25 0 0012 1.5z"/>
-            </svg>
-          </span>
-        </div>
+<!-- SIGNUP FORM -->
+<form id="signupForm" action="{{ route('register') }}" method="POST" class="mt-6 space-y-4 hidden">
+  @csrf
+  <div class="relative">
+    <input name="name" type="text" placeholder="Nama Lengkap" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <div class="relative">
+    <input name="email" type="email" placeholder="Email" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <div class="relative">
+    <input name="password" type="password" placeholder="Password" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <div class="relative">
+    <input name="password_confirmation" type="password" placeholder="Konfirmasi Password" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
+  </div>
+  <div class="flex justify-center">
+    <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
+  </div>
+  <button type="submit" class="w-full rounded-full bg-rose-400 text-white py-3 font-medium transition active:scale-95 hover:shadow-md">
+    Sign Up
+  </button>
+</form>
 
-        <button type="submit"
-          class="w-full rounded-full bg-rose-400 text-white py-3 font-medium transition active:scale-95 hover:shadow-md">
-          Login
-        </button>
-      </form>
+<a href="{{ route('auth.google') }}" class="flex items-center justify-center gap-3 mx-auto border border-gray-300 rounded-md py-2 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-5 h-5" />
+  Sign in with Google
+</a>
 
-      <!-- SIGNUP FORM -->
-      <form id="signupForm" action="{{ route('register') }}" method="POST" class="mt-6 space-y-4 hidden">
-        @csrf
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-        <div class="relative">
-          <input name="name" type="text" placeholder="Nama Lengkap"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none"
-            required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-7.5 8.25a7.5 7.5 0 1115 0 .75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75z"/>
-            </svg>
-          </span>
-        </div>
+<script>
+  const loginTab = document.getElementById('loginTab');
+  const signupTab = document.getElementById('signupTab');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
 
-        <div class="relative">
-          <input name="email" type="email" placeholder="Email"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none"
-            required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M1.5 8.67v8.58a2.25 2.25 0 002.25 2.25h16.5a2.25 2.25 0 002.25-2.25V8.67l-9.01 5.34a2.25 2.25 0 01-2.28 0L1.5 8.67z"/>
-            </svg>
-          </span>
-        </div>
+  // Tab switching
+  loginTab.addEventListener('click', () => {
+    loginTab.classList.add('bg-red-600','text-white');
+    loginTab.classList.remove('bg-slate-200','text-slate-800');
 
-        <div class="relative">
-          <input name="password" type="password" placeholder="Password"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none"
-            required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor">
-              <path d="M12 1.5a5.25 5.25 0 00-5.25 5.25V9H5.25A2.25 2.25 0 003 11.25v8.25A2.25 2.25 0 005.25 21.75h13.5A2.25 2.25 0 0021 19.5v-8.25A2.25 2.25 0 0018.75 9H17.25V6.75A5.25 5.25 0 0012 1.5z"/>
-            </svg>
-          </span>
-        </div>
+    signupTab.classList.add('bg-slate-200','text-slate-800');
+    signupTab.classList.remove('bg-red-600','text-white');
 
-        <div class="relative">
-          <input name="password_confirmation" type="password" placeholder="Konfirmasi Password"
-            class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none"
-            required />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor">
-              <path d="M12 1.5a5.25 5.25 0 00-5.25 5.25V9H5.25A2.25 2.25 0 003 11.25v8.25A2.25 2.25 0 005.25 21.75h13.5A2.25 2.25 0 0021 19.5v-8.25A2.25 2.25 0 0018.75 9H17.25V6.75A5.25 5.25 0 0012 1.5z"/>
-            </svg>
-          </span>
-        </div>
+    loginForm.classList.remove('hidden');
+    signupForm.classList.add('hidden');
+  });
 
-        <button type="submit"
-          class="w-full rounded-full bg-rose-400 text-white py-3 font-medium transition active:scale-95 hover:shadow-md">
-          Sign Up
-        </button>
-      </form>
-      
-      <a href="{{ route('auth.google') }}"
-        class="flex items-center justify-center gap-3 mx-auto border border-gray-300 rounded-md py-2 px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
-        <img
-          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-          alt="Google"
-          class="w-5 h-5"
-        />
-        Sign in with Google
-      </a>
+  signupTab.addEventListener('click', () => {
+    signupTab.classList.add('bg-red-600','text-white');
+    signupTab.classList.remove('bg-slate-200','text-slate-800');
 
+    loginTab.classList.add('bg-slate-200','text-slate-800');
+    loginTab.classList.remove('bg-red-600','text-white');
 
-
-    </main>
-
-
-    <script>
-      const loginTab = document.getElementById('loginTab')
-      const signupTab = document.getElementById('signupTab')
-      const loginForm = document.getElementById('loginForm')
-      const signupForm = document.getElementById('signupForm')
-
-      loginTab.addEventListener('click', () => {
-        loginTab.classList.add('bg-red-600', 'text-white')
-        loginTab.classList.remove('bg-slate-200', 'text-slate-800')
-
-        signupTab.classList.add('bg-slate-200', 'text-slate-800')
-        signupTab.classList.remove('bg-red-600', 'text-white')
-
-        loginForm.classList.remove('hidden')
-        signupForm.classList.add('hidden')
-      })
-
-      signupTab.addEventListener('click', () => {
-        signupTab.classList.add('bg-red-600', 'text-white')
-        signupTab.classList.remove('bg-slate-200', 'text-slate-800')
-
-        loginTab.classList.add('bg-slate-200', 'text-slate-800')
-        loginTab.classList.remove('bg-red-600', 'text-white')
-
-        signupForm.classList.remove('hidden')
-        loginForm.classList.add('hidden')
-      })
-    </script>
-
-  </body>
-</html>
+    signupForm.classList.remove('hidden');
+    loginForm.classList.add('hidden');
+  });
+</script>

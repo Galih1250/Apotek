@@ -91,7 +91,11 @@ Route::get('/admin', function () {
     return view('admin.admin', compact('products'));
 })->name('admin.dashboard')->middleware('auth');
 
-Route::get('/auth/google', [SocialiteController::class, 'redirect']);
-Route::get('/auth/google/callback', [SocialiteController::class, 'callback']);
+Route::get('/auth/google', [SocialiteController::class, 'redirect'])
+    ->name('auth.google');
+
+Route::get('/auth/google/callback', [SocialiteController::class, 'callback'])
+    ->name('auth.google.callback');
+  
 
 require __DIR__.'/auth.php';
