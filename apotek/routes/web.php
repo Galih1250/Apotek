@@ -67,29 +67,33 @@ Route::post('/midtrans-webhook', [PaymentController::class, 'handleNotification'
 
 
 // routes/web.php
-Route::prefix('admin')->middleware('auth')->group(function() {
-    Route::get('products', [ProductController::class, 'index'])->name('admin.products.index');
-    Route::get('products/create', [ProductController::class, 'create'])->name('admin.products.create');
-    Route::post('products', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-    Route::put('products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+
+        Route::get('products', [ProductController::class, 'index'])
+            ->name('admin.index');
+
+        Route::get('products/create', [ProductController::class, 'create'])
+            ->name('admin.input');
+
+        Route::post('products', [ProductController::class, 'store'])
+            ->name('admin.store');
+
+        Route::get('products/{product}/edit', [ProductController::class, 'edit'])
+            ->name('admin.edit');
+
+        Route::put('products/{product}', [ProductController::class, 'update'])
+            ->name('admin.update');
+
+        Route::delete('products/{product}', [ProductController::class, 'destroy'])
+            ->name('admin.destroy');
 });
+
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/admin', function () {
-    $user = Auth::user();
 
-    // Redirect non-admin users to store
-    if (!$user || !$user->is_admin) {
-        return redirect()->route('store.index');
-    }
-
-    $products = \App\Models\Product::all(); // or paginate if needed
-
-    return view('admin.admin', compact('products'));
-})->name('admin.dashboard')->middleware('auth');
 
 Route::get('/auth/google', [SocialiteController::class, 'redirect'])
     ->name('auth.google');

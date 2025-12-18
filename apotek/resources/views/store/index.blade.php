@@ -14,10 +14,18 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
 
             <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-                    <span class="text-red-600 font-semibold">AP</span>
-                </div>
-            </div>
+    <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
+        <span class="text-red-600 font-semibold">AP</span>
+    </div>
+
+    @auth
+    <span class="text-white text-sm font-medium hidden sm:inline">
+        Welcome{{ auth()->user()->is_admin ? ', Admin' : '' }}, {{ auth()->user()->name }}
+    </span>
+@endauth
+
+</div>
+
 
             <div class="flex items-center gap-4">
                 <div class="relative">
@@ -36,6 +44,11 @@
                         <a href="{{ route('login') }}" class="block">
                             <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
                                 Login / Signup
+                            </div>
+                        </a>
+                        <a href="{{ route('admin.index') }}" class="block">
+                            <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
+                                Admin Dashboard
                             </div>
                         </a>
                     </div>

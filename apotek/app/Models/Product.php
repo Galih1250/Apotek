@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -16,6 +17,18 @@ class Product extends Model
         'category_id',
         'is_active'
     ];
+
+    protected static function booted()
+{
+    static::creating(function ($product) {
+        if (empty($product->slug)) {
+            $slug = Str::slug($product->name);
+            $count = static::where('slug', 'LIKE', "{$slug}%")->count();
+            $product->slug = $count ? "{$slug}-{$count}" : $slug;
+        }
+    });
+}
+
 
     public function category()
     {
