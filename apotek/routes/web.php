@@ -48,14 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Payment
-    Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
-    Route::post('/payment/create', [PaymentController::class, 'createPayment'])->name('payment.create');
-    Route::get('/payment/result', [PaymentController::class, 'paymentResult'])->name('payment.result');
-    Route::get('/payment/history', [PaymentController::class, 'history'])->name('payment.history');
-    Route::post('/payment/check-status', [PaymentController::class, 'checkStatus'])->name('payment.check-status');
-});
-
 
 // ===========================================
 // MIDTRANS WEBHOOK
