@@ -64,6 +64,16 @@
     </div>
 
     <div>
+      <label class="text-sm font-medium">Kategori</label>
+      <select name="category_id" class="mt-1 w-full rounded-lg bg-gray-100 px-3 py-2">
+        <option value="">- Pilih Kategori -</option>
+        @foreach($categories as $cat)
+          <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+        @endforeach
+      </select>
+    </div>
+
+    <div>
       <label class="text-sm font-medium">URL Gambar</label>
       <input id="imageUrl" name="image_url" type="url"
              value="{{ old('image_url') }}"

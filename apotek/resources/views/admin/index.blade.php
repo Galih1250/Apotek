@@ -54,7 +54,7 @@
 
 
     </div>
-    <div class="mt-3 text-sky-600 text-sm font-medium">Medicines</div>
+    <div class="mt-3 text-sky-600 text-sm font-medium">{{ $product->category->name ?? 'Uncategorized' }}</div>
     <h3 class="mt-1 font-semibold">{{ $product->name }}</h3>
     <div class="mt-2 mb-4 text-slate-900 font-extrabold">RP {{ number_format($product->price,0,',','.') }}</div>
     <div class="mt-auto flex gap-2">

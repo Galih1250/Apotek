@@ -57,6 +57,11 @@
                                                class="text-blue-600 hover:text-blue-700 font-medium">
                                                 View
                                             </a>
+
+                                            @if((isset($transaction->metadata['midtrans']['pdf_url']) && $transaction->metadata['midtrans']['pdf_url']) || isset($transaction->metadata['invoice_path']))
+                                                <a href="{{ route('payment.invoice.preview', ['order_id' => $transaction->order_id]) }}" class="ml-3 text-green-600 hover:text-green-700 font-medium">Preview Invoice</a>
+                                                <a href="{{ route('payment.invoice', ['order_id' => $transaction->order_id]) }}" class="ml-3 text-gray-600 hover:text-gray-800 font-medium">Download</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

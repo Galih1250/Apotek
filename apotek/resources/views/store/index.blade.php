@@ -84,9 +84,34 @@
 
 <main class="max-w-7xl mx-auto px-4 py-6">
     <section>
+        {{-- Search + Categories filter bar --}}
+        <form method="GET" action="{{ route('store.index') }}" class="mb-4 flex items-center gap-3">
+            <input type="text" name="q" value="{{ request('q') ?? '' }}" placeholder="Cari produk atau kategori..."
+                   class="flex-1 rounded-full px-4 py-2 border bg-white" />
+
+            {{-- preserve currently selected category when searching --}}
+            <input type="hidden" name="category" value="{{ request('category') }}">
+
+            <button type="submit" class="rounded-full bg-red-600 text-white px-4 py-2">Cari</button>
+        </form>
+
+        <div class="mb-4 flex items-center gap-3 overflow-auto">
+            <a href="{{ route('store.index') }}" class="px-3 py-1 rounded-full text-sm border transition-colors {{ request('category') ? 'bg-white text-slate-700 border-slate-200' : 'bg-red-600 text-white border-red-600' }}">
+                All
+            </a>
+
+            @foreach($categories ?? [] as $cat)
+                <a href="{{ route('store.index', array_merge(request()->except('page'), ['category' => $cat->slug])) }}"
+                   class="px-3 py-1 rounded-full text-sm border transition-colors {{ request('category') === $cat->slug ? 'bg-red-600 text-white border-red-600' : 'bg-white text-slate-700 border-slate-200' }}">
+                    {{ $cat->name }}
+                </a>
+            @endforeach
+        </div>
+
+        {{-- Product grid --}}
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-            @foreach ($products as $product)
+            @forelse ($products as $product)
                 <div class="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-4 flex flex-col h-full">
 
                     <div class="aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center">
@@ -116,8 +141,17 @@
                         </svg>
                     </a>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-span-full bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-6 text-center">
+                    No products found in this category.
+                </div>
+            @endforelse
 
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-6">
+            {{ $products->links() }}
         </div>
     </section>
 </main>

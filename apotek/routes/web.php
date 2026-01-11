@@ -54,6 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/result', [PaymentController::class, 'paymentResult'])->name('payment.result');
     Route::get('/payment/history', [PaymentController::class, 'history'])->name('payment.history');
     Route::post('/payment/check-status', [PaymentController::class, 'checkStatus'])->name('payment.check-status');
+
+    // Invoice download / preview (authenticated)
+    Route::get('/payment/invoice/{order_id}', [PaymentController::class, 'downloadInvoice'])->name('payment.invoice');
+    Route::get('/payment/invoice/{order_id}/preview', [PaymentController::class, 'previewInvoice'])->name('payment.invoice.preview');
 });
 
 
@@ -62,6 +66,19 @@ Route::middleware('auth')->group(function () {
 // ===========================================
 Route::post('/midtrans-webhook', [PaymentController::class, 'handleNotification'])
     ->name('midtrans.webhook');
+
+// Recurring notifications (Midtrans)
+Route::post('/midtrans-recurring', [PaymentController::class, 'handleRecurringNotification'])
+    ->name('midtrans.recurring');
+
+// Pay account notifications (Midtrans)
+Route::post('/midtrans-pay-account', [PaymentController::class, 'handlePayAccountNotification'])
+    ->name('midtrans.pay_account');
+
+// Redirect endpoints for success / unfinish / error (these are the URLs you put into Midtrans console)
+Route::get('/payment/finish', [PaymentController::class, 'finishRedirect'])->name('payment.finish');
+Route::get('/payment/unfinish', [PaymentController::class, 'unfinishRedirect'])->name('payment.unfinish');
+Route::get('/payment/error', [PaymentController::class, 'paymentError'])->name('payment.error');
 
 
 
