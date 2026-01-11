@@ -10,8 +10,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- Account Profile Card -->
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-6">
+                    <div class="text-gray-900">
                         <h3 class="text-lg font-semibold mb-4">Account Information</h3>
 
                         <div class="space-y-2">
@@ -31,13 +31,13 @@
 
                         <div class="mt-6 flex flex-col sm:flex-row gap-3">
                             <a href="{{ route('profile.edit') }}"
-                               class="px-4 py-2 bg-gray-700 text-white rounded-lg text-center hover:bg-gray-800 transition">
+                               class="px-4 py-2 bg-red-600 text-white rounded-full text-center hover:bg-red-700 transition">
                                 Edit Profile
                             </a>
 
                             @if(auth()->user()->role === 'admin')
                                 <a href="{{ route('admin.index') }}"
-                                   class="px-4 py-2 bg-red-600 text-white rounded-lg text-center hover:bg-red-700 transition">
+                                   class="px-4 py-2 bg-red-600 text-white rounded-full text-center hover:bg-red-700 transition">
                                     Admin Panel
                                 </a>
                             @endif

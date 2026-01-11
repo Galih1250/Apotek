@@ -85,7 +85,7 @@ Route::get('/payment/error', [PaymentController::class, 'paymentError'])->name('
 
 // routes/web.php
 Route::prefix('admin')
-    ->middleware(['auth', 'admin'])
+    ->middleware(['auth', 'admin', 'throttle:admin'])
     ->group(function () {
 
         Route::get('products', [ProductController::class, 'index'])
