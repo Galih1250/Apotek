@@ -41,16 +41,34 @@
 
                     <div id="menuPopover"
                          class="hidden absolute right-0 mt-2 w-44 sm:w-52 bg-white rounded-2xl shadow-lg ring-1 ring-slate-200 p-3">
-                        <a href="{{ route('login') }}" class="block">
-                            <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
-                                Login / Signup
-                            </div>
-                        </a>
-                        <a href="{{ route('admin.index') }}" class="block">
-                            <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
-                                Admin Dashboard
-                            </div>
-                        </a>
+                        @guest
+                            <a href="{{ route('login') }}" class="block">
+                                <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
+                                    Login / Signup
+                                </div>
+                            </a>
+                        @else
+                            <a href="{{ route('dashboard') }}" class="block">
+                                <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
+                                    Profile
+                                </div>
+                            </a>
+
+                            @if(auth()->user()->is_admin)
+                                <a href="{{ route('admin.index') }}" class="block mt-2">
+                                    <div class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
+                                        Admin Dashboard
+                                    </div>
+                                </a>
+                            @endif
+
+                            <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                                @csrf
+                                <button type="submit" class="w-full bg-red-600 text-white rounded-lg px-4 py-2 text-sm text-center transition-transform duration-200 active:scale-95 hover:shadow-md">
+                                    Logout
+                                </button>
+                            </form>
+                        @endguest
                     </div>
                 </div>
                 <a href="{{ route('store.cart') }}"

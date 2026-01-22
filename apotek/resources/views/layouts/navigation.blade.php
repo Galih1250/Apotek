@@ -5,7 +5,7 @@
             <div class="flex items-center gap-3">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 text-white">
+                    <a href="{{ route('store.index') }}" class="flex items-center gap-3 text-white">
                         <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
                             <span class="text-red-600 font-semibold">AP</span>
                         </div>
