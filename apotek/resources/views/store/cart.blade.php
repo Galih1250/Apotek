@@ -15,9 +15,10 @@
 <body class="bg-white text-slate-800">
 <header class="bg-red-600">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-            <span class="text-red-600 font-semibold">AP</span>
+        <div class="flex items-center gap-3">
+            <img src="{{ asset('images/logo/logo.png') }}" alt="AP Logo" class="h-10 w-10 rounded-full object-cover">
         </div>
+        
         <button onclick="history.back()" class="inline-flex items-center gap-2 text-white rounded-full px-3 py-1 ring-1 ring-white/50 hover:bg-white/10 transition-transform active:scale-95">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -138,15 +139,15 @@ const render = () => {
             </div>
 
             <div class="flex items-center gap-2">
-                <button data-idx="${idx}" data-act="minus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center">
+                <button data-idx="${idx}" data-act="minus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
                 </button>
 
-                <button data-idx="${idx}" data-act="plus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center">
+                <button data-idx="${idx}" data-act="plus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
                 </button>
 
-                <button data-idx="${idx}" data-act="remove" class="h-8 w-8 rounded-full bg-red-600 text-white flex items-center justify-center">
+                <button data-idx="${idx}" data-act="remove" class="h-8 w-8 rounded-full bg-red-600 text-white flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg>
                 </button>
             </div>

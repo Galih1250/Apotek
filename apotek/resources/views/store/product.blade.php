@@ -11,9 +11,7 @@
     <header class="bg-red-600">
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-            <span class="text-red-600 font-semibold">AP</span>
-          </div>
+          <img src="{{ asset('images/logo/logo.png') }}" alt="AP Logo" class="h-10 w-10 rounded-full object-cover">
         </div>
 
         <div class="flex items-center gap-2">

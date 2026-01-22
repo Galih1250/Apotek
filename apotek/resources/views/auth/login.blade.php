@@ -11,9 +11,7 @@
 
     <header class="bg-red-600">
       <div class="max-w-md mx-auto px-4 py-6 flex flex-col items-center gap-3">
-        <div class="h-20 w-20 rounded-full bg-white flex items-center justify-center">
-          <span class="text-red-600 font-bold">WMK</span>
-        </div>
+        <img src="{{ asset('images/logo/logo.png') }}" alt="WMK Logo" class="h-20 w-20 rounded-full object-cover">
         <div class="text-white text-2xl font-semibold">Selamat Datang</div>
       </div>
       <div class="h-1 bg-sky-400"></div>

@@ -14,9 +14,7 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
 
             <div class="flex items-center gap-3">
-    <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-        <span class="text-red-600 font-semibold">AP</span>
-    </div>
+    <img src="{{ asset('images/logo/logo.png') }}" alt="AP Logo" class="h-10 w-10 rounded-full object-cover">
 
     @auth
     <span class="text-white text-sm font-medium hidden sm:inline">
