@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
+use App\Services\MidtransService;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -49,6 +50,18 @@ public function show($slug)
 {
     $product = Product::where('slug', $slug)->firstOrFail();
     return view('store.product', compact('product'));
+}
+
+public function pay(Request $request)
+{
+    $request->validate([
+        'amount' => 'required|numeric|min:10000',
+        'description' => 'nullable|string|max:255',
+    ]);
+
+    // Create payment via PaymentController
+    $paymentController = new PaymentController(app('MidtransService'));
+    return $paymentController->createPayment($request);
 }
 
 }

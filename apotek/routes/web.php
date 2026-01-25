@@ -23,10 +23,7 @@ Route::prefix('/')->name('store.')->group(function () {
     Route::get('/cart', function () {
         return view('store.cart');
     })->name('cart');
-Route::get('/pay', [StoreController::class, 'pay'])->name('store.pay');
-Route::get('/pay', [PaymentController::class, 'payPage'])->name('pay');
-Route::get('/pay/create', [PaymentController::class, 'create'])->name('pay.create');
-Route::post('/pay', [PaymentController::class, 'pay'])->name('store.pay');
+    Route::post('/pay', [StoreController::class, 'pay'])->name('pay');
 });
 
 

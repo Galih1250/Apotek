@@ -98,14 +98,21 @@ public function handleNotification(Request $request)
         return response()->json(['status' => 'error'], 400);
     }
 
-    $signature = hash('sha512',
-    $request->order_id .
-    $request->status_code .
-    $request->gross_amount .
-    config('services.midtrans.server_key')
-);
+    // Get values from notification data
+    $orderId = $notif['order_id'] ?? null;
+    $statusCode = $notif['status_code'] ?? null;
+    $grossAmount = $notif['gross_amount'] ?? null;
+    $signatureKey = $notif['signature_key'] ?? null;
 
-abort_unless($signature === $request->signature_key, 403);
+    // Verify signature
+    $signature = hash('sha512',
+        $orderId .
+        $statusCode .
+        $grossAmount .
+        config('services.midtrans.server_key')
+    );
+
+    abort_unless($signature === $signatureKey, 403);
 
 
     try {

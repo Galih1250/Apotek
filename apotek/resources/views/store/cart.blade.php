@@ -55,58 +55,6 @@
     data-client-key="{{ config('midtrans.client_key') }}">
 </script>
 
-<script>
-document.getElementById('payAllBtn').addEventListener('click', function () {
-    
-    const btn = document.getElementById('payAllBtn');
-    btn.disabled = true;
-    btn.textContent = 'Processing...';
-
-    fetch('{{ route("store.pay") }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ pay_all: true })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (!data.success) {
-            alert(data.message || 'Payment creation failed.');
-            btn.disabled = false;
-            btn.textContent = 'Bayar Semua';
-            return;
-        }
-
-        snap.pay(data.snap_token, {
-            onSuccess: function (result) {
-                window.location.href = '/payment/result?order_id=' + data.order_id;
-            },
-            onPending: function (result) {
-                window.location.href = '/payment/result?order_id=' + data.order_id;
-            },
-            onError: function (result) {
-                alert('Payment failed.');
-                btn.disabled = false;
-                btn.textContent = 'Bayar Semua';
-            },
-            onClose: function () {
-                btn.disabled = false;
-                btn.textContent = 'Bayar Semua';
-            }
-        });
-    })
-    .catch(err => {
-        console.error(err);
-        alert('Server error.');
-        btn.disabled = false;
-        btn.textContent = 'Bayar Semua';
-    });
-
-});
-</script>
-
 
 <script>
 const money = (n) => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
@@ -139,15 +87,15 @@ const render = () => {
             </div>
 
             <div class="flex items-center gap-2">
-                <button data-idx="${idx}" data-act="minus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center flex-shrink-0">
+                <button data-idx="${idx}" data-act="minus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
                 </button>
 
-                <button data-idx="${idx}" data-act="plus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center flex-shrink-0">
+                <button data-idx="${idx}" data-act="plus" class="h-8 w-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
                 </button>
 
-                <button data-idx="${idx}" data-act="remove" class="h-8 w-8 rounded-full bg-red-600 text-white flex items-center justify-center flex-shrink-0">
+                <button data-idx="${idx}" data-act="remove" class="h-8 w-8 rounded-full bg-red-600 text-white flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg>
                 </button>
             </div>

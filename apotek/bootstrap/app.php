@@ -15,6 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // CSRF exception (Midtrans)
         $middleware->validateCsrfTokens(except: [
             'midtrans-webhook',
+            'midtrans-recurring',
+            'midtrans-pay-account',
         ]);
 
         $middleware->alias([
