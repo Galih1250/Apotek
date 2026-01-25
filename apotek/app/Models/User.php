@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -56,5 +57,13 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Whether the user is an admin.
+     */
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role === 'admin';
     }
 }

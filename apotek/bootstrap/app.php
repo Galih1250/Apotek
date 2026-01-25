@@ -11,11 +11,29 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Exclude Midtrans webhook from CSRF verification
+
+        // CSRF exception (Midtrans)
         $middleware->validateCsrfTokens(except: [
             'midtrans-webhook',
+            'midtrans-recurring',
+            'midtrans-pay-account',
         ]);
-    })
+
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminOnly::class,
+        ]);
+
+        $middleware->trustProxies(
+    at: '*',
+    headers:
+        \Illuminate\Http\Request::HEADER_X_FORWARDED_FOR |
+        \Illuminate\Http\Request::HEADER_X_FORWARDED_HOST |
+        \Illuminate\Http\Request::HEADER_X_FORWARDED_PORT |
+        \Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO,
+);
+
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
