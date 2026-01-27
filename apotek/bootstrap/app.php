@@ -23,6 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminOnly::class,
         ]);
 
+        // Apply security headers to all routes
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         $middleware->trustProxies(
     at: '*',
     headers:
