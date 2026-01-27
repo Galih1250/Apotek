@@ -39,10 +39,10 @@ class SecurityHeaders
 
         // Content Security Policy - strict but allowing essential scripts
         $csp = "default-src 'self'; "
-            . "script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://cdn.tailwindcss.com; "
-            . "style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; "
+            . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://cdn.tailwindcss.com; "
+            . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://cdn.tailwindcss.com; "
             . "img-src 'self' data: https:; "
-            . "font-src 'self' data:; "
+            . "font-src 'self' data: https://fonts.bunny.net; "
             . "frame-src 'self' https://www.google.com; "
             . "connect-src 'self' https://api.github.com https://accounts.google.com https://www.google.com; "
             . "form-action 'self'; "
