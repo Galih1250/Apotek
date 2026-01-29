@@ -53,6 +53,9 @@
   <div class="relative">
     <input name="password" type="password" placeholder="Password" class="w-full rounded-full bg-gray-300/80 px-4 py-3 pr-12 placeholder-slate-600 focus:outline-none" required />
   </div>
+  <div class="flex justify-center">
+    <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
+  </div>
   <button type="submit" class="w-full rounded-full bg-rose-400 text-white py-3 font-medium transition active:scale-95 hover:shadow-md">
     Login
   </button>
