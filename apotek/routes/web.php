@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 // ===========================================
 // STORE FRONT
 // ===========================================
-Route::prefix('/')->name('store.')->group(function () {
+Route::prefix('/')->name('store.')->middleware('auth')->group(function () {
 
     // Homepage
     Route::get('/', [StoreController::class, 'index'])->name('index');
