@@ -19,7 +19,7 @@
 
     <main class="max-w-md mx-auto px-4 py-8">
       <div class="text-center text-red-700 text-2xl font-semibold">
-        Klinik Wijaya Medika 
+        Wijaya Medika Klinik 
       </div>
 
       <!-- LOGIN / SIGNUP PAGE (no CSS changed) -->

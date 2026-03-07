@@ -10,9 +10,9 @@
     <header class="sticky top-0 z-40">
       <div class="bg-red-600">
         <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-          <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-              <span class="text-red-600 font-semibold">AP</span>
+          <<div class="flex items-center gap-3">
+    <img src="{{ asset('images/logo/logo.png') }}" alt="AP Logo" class="h-10 w-10 rounded-full object-cover">
+
             </div>
             
           </div>
