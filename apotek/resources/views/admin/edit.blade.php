@@ -61,7 +61,7 @@
 
       <div>
         <label class="text-sm font-medium">Stok</label>
-        <input name="stock" type="number"
+        <input name="stock" type="number" min="0"
                value="{{ old('stock', $product->stock) }}"
                class="mt-1 w-full rounded-lg bg-gray-100 px-3 py-2">
       </div>
